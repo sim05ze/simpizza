@@ -1,0 +1,32 @@
+/* register.module.scss */
+.wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form input {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .form button {
+    padding: 0.5rem;
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .message {
+    margin-top: 1rem;
+    color: red;
+  }
+  

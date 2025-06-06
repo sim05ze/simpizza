@@ -2,10 +2,12 @@
 
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import styles from "./styles.module.scss"
 import Box from '../../../public/img/box.svg'
 import { useCartStore } from "@/store/cartStore/useCartStore";
 const Cart = () => {
+  const router = useRouter();
   const { cart, updateQuantity, clearCart } = useCartStore();
 
 
@@ -45,7 +47,7 @@ const Cart = () => {
                     <button onClick={() => updateQuantity(pizza.id, 1)}>+</button>
                   </div>
                   <div>
-                    <span>{pizza.quantity * pizza.totalPrice}₽</span>
+                    <span>{pizza.quantity * pizza.totalPrice}C</span>
                   </div>
                 </div>
               </li>
@@ -61,15 +63,11 @@ const Cart = () => {
             <div className={styles.summary}>
               <div className={styles.total}>
                 <span>Итого:</span>
-                <span>{totalPrice} ₽</span>
-              </div>
-              <div className={styles.tax}>
-                <span>Налог 5%:</span>
-                <span>{tax} ₽</span>
+                <span>{totalPrice} C</span>
               </div>
             </div>
 
-            <button className={styles.orderButton} onClick={() => alert("Заказ оформлен!")}>
+            <button className={styles.orderButton} onClick={() =>router.push("/checkout")}>
               Оформить заказ →
             </button>
           </div>

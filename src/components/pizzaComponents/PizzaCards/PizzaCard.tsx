@@ -35,7 +35,7 @@ const PizzaCard: React.FC<IPizzaDataCard> = ({ pizza, onAddToCart }) => {
           <h1 className={styles.name}>{pizza.name}</h1>
           <p className={styles.description}>{pizza.description}</p>
           <div className={styles.bottomWrapper}>
-            <h3 className={styles.price}>От {pizza.price} ₽</h3>
+            <h3 className={styles.price}>От {pizza.price} C</h3>
             <button  onClick={() => onAddToCart(pizza)} className={styles.addBtn}>+ Добавить</button>
           </div>
         </div>

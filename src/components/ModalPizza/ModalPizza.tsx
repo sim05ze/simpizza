@@ -87,7 +87,7 @@ const ModalPizza: React.FC<ModalProps> = ({ isOpen, pizza, onClose }) => {
           </div>
 
           <button className={styles.confirmButton} onClick={handleConfirm}>
-            Добавить в корзину за {calculateTotalPrice()}₽
+            Добавить в корзину за {calculateTotalPrice()}C
           </button>
           <button className={styles.cancelButton} onClick={onClose}>
             Отмена

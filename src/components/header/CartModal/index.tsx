@@ -33,7 +33,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, cartItems, remov
                 <img src={item.image} alt={item.name} width={50} height={50} />
                 <div className={styles.itemInfo}>
                   <span className={styles.itemName}>{item.name}</span>
-                  <span className={styles.itemPrice}>{item.price} ₽</span>
+                  <span className={styles.itemPrice}>{item.price} С</span>
                   <span className={styles.itemQuantity}>Кол-во: {item.quantity}</span>
                 </div>
                 <button className={styles.removeBtn} onClick={() => removeFromCart(item.id)}>Удалить</button>

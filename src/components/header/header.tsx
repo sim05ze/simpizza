@@ -1,23 +1,25 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { PizzaService } from "@/services/pizzaService";
-import styles from "./styles.module.scss";
-import MainIcon from "./svg/icon_pizza.svg";
-import SearchVector from "./svg/search_vector.svg";
-import SignInIcon from "./svg/sign_in_icon.svg";
-import ShoppingCartIcon from "./svg/shopping_cart.svg";
-import { IPizza } from "@/store/pizza.interface";
-import Link from "next/link";
-import Cart from "../cart/Cart";
-import CloseBtn from "./svg/close_vector.svg";
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useAuth } from '@/store/context/authContext'; // подключаем контекст
+import { PizzaService } from '@/services/pizzaService';
+import styles from './styles.module.scss';
+import MainIcon from './svg/icon_pizza.svg';
+import SearchVector from './svg/search_vector.svg';
+import SignInIcon from './svg/sign_in_icon.svg';
+import ShoppingCartIcon from './svg/shopping_cart.svg';
+import { IPizza } from '@/store/pizza.interface';
+import Link from 'next/link';
+import Cart from '../cart/Cart';
+import CloseBtn from './svg/close_vector.svg';
 
 const Header: React.FC = () => {
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredPizzas, setFilteredPizzas] = useState<IPizza[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const { isLoggedIn, logout } = useAuth();
 
   useEffect(() => {
     const fetchPizzas = async () => {
@@ -25,7 +27,7 @@ const Header: React.FC = () => {
         const response = await PizzaService.fetchPizzas();
         setPizzas(response);
       } catch (error) {
-        console.error("Ошибка загрузки пицц:", error);
+        console.error('Ошибка загрузки пицц:', error);
       }
     };
 
@@ -44,21 +46,11 @@ const Header: React.FC = () => {
 
   return (
     <>
-      {(searchTerm || isCartOpen) && (
-        <div className={styles.overlay} onClick={closeCart}></div>
-      )}
-
-      <header
-        className={`${styles.header} ${isCartOpen ? styles.disabled : ""}`}
-      >
+      <header className={`${styles.header} ${isCartOpen ? styles.disabled : ''}`}>
         <div className={styles.headerWrapper}>
-          <Link href={"/"}>
+          <Link href="/">
             <div className={styles.iconContainer}>
-              <Image
-                className={styles.icon}
-                src={MainIcon}
-                alt="Главная иконка"
-              />
+              <Image className={styles.icon} src={MainIcon} alt="Главная иконка" />
               <div>
                 <h1 className={styles.iconText1}>SIMPIZZA</h1>
                 <h2 className={styles.iconText2}>вкусней уже некуда</h2>
@@ -66,16 +58,8 @@ const Header: React.FC = () => {
             </div>
           </Link>
 
-          <div
-            className={`${styles.search} ${
-              isCartOpen && !searchTerm ? styles.searchDimmed : ""
-            }`}
-          >
-            <Image
-              className={styles.searchVector}
-              src={SearchVector}
-              alt="Иконка поиска"
-            />
+          <div className={`${styles.search} ${isCartOpen && !searchTerm ? styles.searchDimmed : ''}`}>
+            <Image className={styles.searchVector} src={SearchVector} alt="Иконка поиска" />
             <input
               placeholder="Поиск пиццы..."
               className={styles.input}
@@ -87,25 +71,14 @@ const Header: React.FC = () => {
             {searchTerm && (
               <div className={styles.searchResults}>
                 {filteredPizzas.map((pizza) => (
-                  <Link
-                    href={`/pizza/${pizza.id}`}
-                    key={pizza.id}
-                    onClick={() => setSearchTerm("")} 
-                  >
+                  <Link href={`/pizza/${pizza.id}`} key={pizza.id} onClick={() => setSearchTerm('')}>
                     <div className={styles.resultItem}>
                       <div>
-                        <Image
-                          src={pizza.image}
-                          alt={pizza.name}
-                          width={40}
-                          height={40}
-                        />
+                        <Image src={pizza.image} alt={pizza.name} width={40} height={40} />
                       </div>
                       <div className={styles.pizzaText}>
                         <span>{pizza.name}</span>
-                        <span className={styles.pizzaprice}>
-                          {pizza.price}₽
-                        </span>
+                        <span className={styles.pizzaprice}>{pizza.price}С</span>
                       </div>
                     </div>
                   </Link>
@@ -115,26 +88,29 @@ const Header: React.FC = () => {
           </div>
 
           <div className={styles.buttons}>
-            <Link href={"/register"}>
-            <button className={styles.signInButton} disabled={isCartOpen}>
-              <Image src={SignInIcon} alt="Иконка входа" />
-              <h3 className={styles.signInText}>Войти</h3>
-            </button>
-            </Link>
-            
-            <button
-              className={styles.cartButton}
-              onClick={() => setIsCartOpen(true)}
-            >
+            {isLoggedIn ? (
+              <Link href="/profile">
+                <button className={styles.signInButton} disabled={isCartOpen}>
+                  <Image src={SignInIcon} alt="Профиль" />
+                  <h3 className={styles.signInText}>Мой профиль</h3>
+                </button>
+              </Link>
+            ) : (
+              <Link href="/register">
+                <button className={styles.signInButton} disabled={isCartOpen}>
+                  <Image src={SignInIcon} alt="Вход" />
+                  <h3 className={styles.signInText}>Войти</h3>
+                </button>
+              </Link>
+            )}
+            <button className={styles.cartButton} onClick={() => setIsCartOpen(true)}>
               <Image src={ShoppingCartIcon} alt="Иконка корзины" />
             </button>
           </div>
         </div>
       </header>
 
-      <div
-        className={`${styles.cartModal} ${isCartOpen ? styles.cartOpen : ""}`}
-      >
+      <div className={`${styles.cartModal} ${isCartOpen ? styles.cartOpen : ''}`}>
         <button className={styles.closeButton} onClick={closeCart}>
           <Image src={CloseBtn} alt="Закрыть" />
         </button>

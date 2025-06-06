@@ -103,14 +103,14 @@ const PizzaDetail: NextPage<IPizzaDataSingle> = ({ pizza }) => {
                     className={styles.toppingImage}
                   />
                   <span>{topping.name}</span>
-                  <span>{topping.price}₽</span>
+                  <span>{topping.price}C</span>
                 </div>
               ))}
             </div>
           </div>
 
           <button className={styles.addToCart} onClick={handleConfirm}>
-            Добавить в корзину за {calculateTotalPrice()}₽
+            Добавить в корзину за {calculateTotalPrice()}C
           </button>
         </div>
       </div>

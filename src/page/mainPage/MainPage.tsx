@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import styles from "./mainePage.module.scss";
 import TopFilter from "@/components/filterPizza/topFilter/TopFilter";
-import SidebarFilter from "@/components/filterPizza/sidebarFilter/SidebarFilter";
 import PizzaList from "@/components/pizzaComponents/pizzaList/PizzaList";
 import Pagination from "@/components/pagination/pagination";
 import Modal from "@/components/modalPizza/ModalPizza";
